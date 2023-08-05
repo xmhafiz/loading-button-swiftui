@@ -12,9 +12,48 @@ struct ContentView: View {
     @State private var keepLoading = true
     var body: some View {
         VStack {
-            Text("Hello world")
+            Text("Default state")
+            LoadingButton(
+                title: "Press Me",
+                isLoading: $isLoading,
+                loadingText: "Loading.."
+            ) {
+                doTask()
+            }
+            Text("Loading state")
+            LoadingButton(
+                title: "Press Me",
+                isLoading: $keepLoading
+            )
+            Text("Loading state with text")
+            LoadingButton(
+                title: "Press Me",
+                isLoading: $keepLoading,
+                loadingText: "Loading.."
+            )
+            Text("Loading state with text - black")
+            LoadingButton(
+                title: "Press Me",
+                isLoading: $keepLoading,
+                loadingText: "Fetching..",
+                backgroundColor: .black, loaderTintColor: .yellow
+            )
+            Text("Loading state with text - red")
+            LoadingButton(
+                title: "Press Me",
+                isLoading: $keepLoading,
+                loadingText: "Please wait..",
+                backgroundColor: .red
+            )
         }
         .padding()
+    }
+
+    func doTask() {
+        isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+            self.isLoading = false
+        }
     }
 }
 
